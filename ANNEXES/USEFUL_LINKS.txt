@@ -1,0 +1,3 @@
+https://www.tutorialspoint.com/genetic_algorithms/genetic_algorithms_quick_guide.htm
+https://www.section.io/engineering-education/the-basics-of-genetic-algorithms-in-ml/
+https://github.com/emilianogagliardi/genetic-algorithm-racket
