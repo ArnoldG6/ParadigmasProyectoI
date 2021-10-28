@@ -24,7 +24,7 @@
 	
 (define generar_individuo_t ;Genera un individuo con una cadena genética de n alelos, usando "tail recursion".
   (lambda (m n L)
-    (if (= m (+ n 1))
+    (if (= m n)
         L
         (cons (alelo_rand) (generar_individuo_t(+ m 1) n L)); 
 		
@@ -49,8 +49,33 @@
 )
 
 
+(define func_obj_t ;Parámetros: (I: individuo, acumulador de resultado).
+  (lambda (I r)
+    (if (equal? '() I)
+        r
+        (func_obj_t (cdr I) (+ r (car I)))
+    )
+  )
+)
 
-(generar_individuos 50000)
+(define func_obj ;Función objetivo para cada uno de los individuos.
+  (lambda (I)
+	(func_obj_t I 0)
+  )
+)
+
+
+; (define a '(0 0 0 1 0 1 1 1 0 0))
+; (define b '(0 0 0 0 1 1 1 0 1 1))
+; (define c '(1 0 1 0 0 1 1 1 0 1))
+; (define d '(1 1 1 0 1 0 0 1 0 1))
+; (define e '(1 1 1 1 1 1 1 1 1 1))
+; (printf "Probando con 'a: '~s.\n" (func_obj a))
+; (printf "Probando con 'b: '~s.\n" (func_obj b))
+; (printf "Probando con 'c: '~s.\n" (func_obj c))
+; (printf "Probando con 'd: '~s.\n" (func_obj d))
+; (printf "Probando con 'e: '~s.\n" (func_obj e))
+; (generar_individuos 5)
 
 
 
