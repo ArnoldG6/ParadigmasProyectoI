@@ -12,19 +12,22 @@
 ;
 ; A00148103 González Carvajal, Miguel
 ; 117620480 González Quesada, Arnoldo
-;           Ocampo Marín, Victor
+; 117960315          Ocampo Marín, Victor
 ;
 ; ===============================================
 ;
 ; Inserte código místico xd
 
-(define (alelo_rand)  ;Genera un número random entre 0y 1
+(define (alelo_rand)  ;Genera un número random del conjunto {0,1}.
     (+ 0 (random 2)))
+
+	
 (define generar_individuo_t ;Genera un individuo con una cadena genética de n alelos, usando "tail recursion".
   (lambda (m n L)
     (if (= m (+ n 1))
         L
-        (cons (alelo_rand) (generar_individuo_t(+ m 1) n L))
+        (cons (alelo_rand) (generar_individuo_t(+ m 1) n L)); 
+		
     )
   )
 )
@@ -45,4 +48,9 @@
   )
 )
 
-(generar_individuos 5)
+
+
+(generar_individuos 50000)
+
+
+
