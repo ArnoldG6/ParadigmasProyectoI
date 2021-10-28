@@ -31,8 +31,6 @@
 (define (generar_individuo) ;Genera un individuo de cádena genética con n = 10 alelos por defecto.
     (generar_individuo_t 0 10 '())
 )
-(generar_individuo)
-
 (define generar_individuos_t ;Genera n individuos de cadena genética de 10 alelos de manera randomizada, usando "tail recursion".
   (lambda (m n L)
     (if (= m n)
