@@ -16,8 +16,9 @@
 ;
 ; ===============================================
 ;
-; Inserte código místico xd
 
+
+;=========================INDIVIDUOS=========================
 (define (alelo_rand)  ;Genera un número random del conjunto {0,1}.
     (+ 0 (random 2)))
 
@@ -57,14 +58,11 @@
     )
   )
 )
-
 (define func_obj ;Función objetivo para cada uno de los individuos.
   (lambda (I)
 	(func_obj_t I 0)
   )
 )
-
-
 ; (define a '(0 0 0 1 0 1 1 1 0 0))
 ; (define b '(0 0 0 0 1 1 1 0 1 1))
 ; (define c '(1 0 1 0 0 1 1 1 0 1))
@@ -76,6 +74,12 @@
 ; (printf "Probando con 'd: '~s.\n" (func_obj d))
 ; (printf "Probando con 'e: '~s.\n" (func_obj e))
 ; (generar_individuos 5)
+;=========================POBLACIÓN=========================
 
+(define (inic_poblacion) ;Esta función inicializa una población de individuos de tamaño n.
+	(printf "Digite el número de individuos que conforman la población: ")
+	(generar_individuos  (read))
+)
+(inic_poblacion)
 
 
