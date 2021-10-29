@@ -167,12 +167,31 @@
 		)
 	)
 )
+; (define generar_n_grupos
+	; (lambda (n_ind eli n_grupos)
+		; (generar_n_grupos_t '() n_ind eli n_grupos)
+	; )
+; )
 (define generar_n_grupos
 	(lambda (n_ind eli n_grupos)
 		(generar_n_grupos_t '() n_ind eli n_grupos)
 	)
 )
-(generar_n_grupos 2 #t 4)
+(define ordenar_n_grupos_t
+	(lambda (R G);G:grupos, R: lista resultante.
+		(if (equal? '() G)
+			R
+			(ordenar_n_grupos_t (cons (ordenar_poblacion (car G)) R) (cdr G))
+		)
+	)
+)
+(define ordenar_n_grupos
+	(lambda (G)
+		(ordenar_n_grupos_t '() G)
+	)
+)
+(ordenar_n_grupos(generar_n_grupos 2 #t 4))
+; (generar_n_grupos 2 #t 4)
 (exit)
 
 
