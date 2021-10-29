@@ -127,13 +127,10 @@
 	(printf "-------------------------Población sin ordenar-------------------------\n")
 	(printf "~s \n." L)
 	(printf "--------------------------Población ordenada---------------------------\n")
-	(printf "~s.\n" (ordenar_poblacion L))
+	(printf "~s.\n." (ordenar_poblacion L))
   )
 )
-(define (inic_poblacion_usuario) ;Esta función inicializa una población de individuos de tamaño n.
-	(printf "Digite el número de individuos que conforman la población: ")
-	(imp_poblacion (inic_poblacion (read)))
-)
+
 
 ;(define f '(((1 0 1 0 1 0 1 0 1 0) 5) ((0 1 0 0 1 0 0 0 0 0) 2) ((1 0 1 1 0 0 0 1 0 0) 4) ((1 1 1 0 1 0 1 0 0 0) 5) ((1 0 0 0 0 1 1 0 1 0) 4)))
 ;f
@@ -157,7 +154,26 @@
 		(ordenar_poblacion_t '() L)
 	)
 )
-(inic_poblacion_usuario)
+; (define (inic_poblacion_usuario) ;Esta función inicializa una población de individuos de tamaño n.
+	; (printf "Digite el número de individuos que conforman la población: ")
+	; (imp_poblacion (inic_poblacion (read)))
+; )
+; (inic_poblacion_usuario)
+(define generar_n_grupos_t ;Genera n_grupos grupos de tamaño n_ind, sin ordenarlos.
+	(lambda (L n_ind eli n_grupos)
+		(if (= n_grupos 0)
+			L
+			(append (list (inic_poblacion n_ind)) (generar_n_grupos_t L n_ind eli (- n_grupos 1)))
+		)
+	)
+)
+(define generar_n_grupos
+	(lambda (n_ind eli n_grupos)
+		(generar_n_grupos_t '() n_ind eli n_grupos)
+	)
+)
+(generar_n_grupos 2 #t 4)
+(exit)
 
 
 
