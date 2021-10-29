@@ -50,7 +50,7 @@
 )
 
 
-(define func_obj_t ;Parámetros: (I: individuo, acumulador de resultado).
+(define func_obj_t ;Parámetros: (I: individuo, r: acumulador de resultado).
   (lambda (I r)
     (if (equal? '() I)
         r
@@ -75,11 +75,29 @@
 ; (printf "Probando con 'e: '~s.\n" (func_obj e))
 ; (generar_individuos 5)
 ;=========================POBLACIÓN=========================
-
-(define (inic_poblacion) ;Esta función inicializa una población de individuos de tamaño n.
-	(printf "Digite el número de individuos que conforman la población: ")
-	(generar_individuos  (read))
+						;Esta función inicializa una población de individuos de tamaño n y;
+						;genera la lista con los pares (x,y), en donde x:individuo,y: el valor
+						; de su función objetivo
+						;L: lista resultante.
+						;I: Lista de individuos
+(define inic_poblacion_t 
+  (lambda (L I)
+	(if (equal? '() I)
+		L
+		(cons (cons (car I) (func_obj (car I))) (inic_poblacion_t L (cdr I)))
+    )
+  )
 )
-(inic_poblacion)
+(define inic_poblacion
+  (lambda (n)
+	(inic_poblacion_t '() (generar_individuos n))
+  )
+)
+(define (inic_poblacion_usuario) ;Esta función inicializa una población de individuos de tamaño n.
+	(printf "Digite el número de individuos que conforman la población: ")
+	(inic_poblacion (read))
+)
+(inic_poblacion_usuario)
+
 
 
