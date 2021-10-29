@@ -122,13 +122,21 @@
 	(mejor_individuo_pob_t L (car L))
   )
 )
+(define imp_poblacion
+  (lambda (L)
+	(printf "-------------------------Población sin ordenar-------------------------\n")
+	(printf "~s \n." L)
+	(printf "--------------------------Población ordenada---------------------------\n")
+	(printf "~s.\n" (ordenar_poblacion L))
+  )
+)
 (define (inic_poblacion_usuario) ;Esta función inicializa una población de individuos de tamaño n.
 	(printf "Digite el número de individuos que conforman la población: ")
-	(inic_poblacion (read))
+	(imp_poblacion (inic_poblacion (read)))
 )
 
-(define f '(((1 0 1 0 1 0 1 0 1 0) 5) ((0 1 0 0 1 0 0 0 0 0) 2) ((1 0 1 1 0 0 0 1 0 0) 4) ((1 1 1 0 1 0 1 0 0 0) 5) ((1 0 0 0 0 1 1 0 1 0) 4)))
-f
+;(define f '(((1 0 1 0 1 0 1 0 1 0) 5) ((0 1 0 0 1 0 0 0 0 0) 2) ((1 0 1 1 0 0 0 1 0 0) 4) ((1 1 1 0 1 0 1 0 0 0) 5) ((1 0 0 0 0 1 1 0 1 0) 4)))
+;f
 ; (mejor_individuo_pob f)
 
 (define eliminar_mejor_ind ;Desplaza el individuo más apto de la lista, y retorna la lista inicial sin dicho individuo.
@@ -149,7 +157,7 @@ f
 		(ordenar_poblacion_t '() L)
 	)
 )
-(ordenar_poblacion f)
+(inic_poblacion_usuario)
 
 
 
