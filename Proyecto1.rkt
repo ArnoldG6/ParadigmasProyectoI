@@ -190,8 +190,9 @@
 		(ordenar_n_grupos_t '() G)
 	)
 )
-(ordenar_n_grupos(generar_n_grupos 2 #t 4))
-; (generar_n_grupos 2 #t 4)
+(define (imp_grupos_ordenados )
+)
+(ordenar_n_grupos(generar_n_grupos 2 #t 4)) ;Generación 0
 (exit)
 
 
