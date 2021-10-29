@@ -101,30 +101,57 @@
 	)
   )
 )
+(define individuo_mas_apto ;compara por valor de función objetivo y devuelve al individuo más apto.
+  (lambda (x y)
+    (if (< (car(cdr x)) (car(cdr y)))
+	   x 
+	   y
+	)
+  )
+)
 (define mejor_individuo_pob_t ;Devuelve el mejor individuo de una lista según la función objetivo.
-  (lambda (L n)
+  (lambda (L i) ;i: individuo 
   	(if (equal? '() L)
-		n
-		(mejor_individuo_pob_t (cdr L) (max n (car(cdr (car L)))))
+		i 
+		(mejor_individuo_pob_t (cdr L) (individuo_mas_apto i (car L)))
     )
   )
 )
 (define mejor_individuo_pob
   (lambda (L)
-	(mejor_individuo_pob_t L 0)
+	(mejor_individuo_pob_t L (car L))
   )
 )
 (define (inic_poblacion_usuario) ;Esta función inicializa una población de individuos de tamaño n.
 	(printf "Digite el número de individuos que conforman la población: ")
 	(inic_poblacion (read))
 )
-; (define ord_poblacion_t
-
-; )
-; (inic_poblacion_usuario)
-
 
 (define f '(((1 0 1 0 1 0 1 0 1 0) 5) ((0 1 0 0 1 0 0 0 0 0) 2) ((1 0 1 1 0 0 0 1 0 0) 4) ((1 1 1 0 1 0 1 0 0 0) 5) ((1 0 0 0 0 1 1 0 1 0) 4)))
 f
+; (mejor_individuo_pob f)
 
-(mejor_individuo_pob f)
+(define eliminar_mejor_ind ;Desplaza el individuo más apto de la lista, y retorna la lista inicial sin dicho individuo.
+	(lambda (L)
+		(remove (mejor_individuo_pob L) L)
+	)
+)
+(define ordenar_poblacion_t
+	(lambda (R L) ; R: Lista de individuos con peso ordenada. L: Lista de individuos con peso sin ordenar.
+		(if (equal? '() L)
+			R
+			(ordenar_poblacion_t (cons (mejor_individuo_pob L) R) (eliminar_mejor_ind L))
+		)	
+	)
+)
+(define ordenar_poblacion
+	(lambda (L)
+		(ordenar_poblacion_t '() L)
+	)
+)
+(ordenar_poblacion f)
+
+
+
+
+
