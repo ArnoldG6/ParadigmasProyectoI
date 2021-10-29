@@ -93,11 +93,38 @@
 	(inic_poblacion_t '() (generar_individuos n))
   )
 )
+(define max
+  (lambda (x y)
+    (if (< x y) 
+	   y 
+	   x
+	)
+  )
+)
+(define mejor_individuo_pob_t ;Devuelve el mejor individuo de una lista según la función objetivo.
+  (lambda (L n)
+  	(if (equal? '() L)
+		n
+		(mejor_individuo_pob_t (cdr L) (max n (car(cdr (car L)))))
+    )
+  )
+)
+(define mejor_individuo_pob
+  (lambda (L)
+	(mejor_individuo_pob_t L 0)
+  )
+)
 (define (inic_poblacion_usuario) ;Esta función inicializa una población de individuos de tamaño n.
 	(printf "Digite el número de individuos que conforman la población: ")
 	(inic_poblacion (read))
 )
-(inic_poblacion_usuario)
+; (define ord_poblacion_t
+
+; )
+; (inic_poblacion_usuario)
 
 
+(define f '(((1 0 1 0 1 0 1 0 1 0) 5) ((0 1 0 0 1 0 0 0 0 0) 2) ((1 0 1 1 0 0 0 1 0 0) 4) ((1 1 1 0 1 0 1 0 0 0) 5) ((1 0 0 0 0 1 1 0 1 0) 4)))
+f
 
+(mejor_individuo_pob f)
