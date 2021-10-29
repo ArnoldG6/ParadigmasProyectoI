@@ -84,7 +84,7 @@
   (lambda (L I)
 	(if (equal? '() I)
 		L
-		(cons (cons (car I) (func_obj (car I))) (inic_poblacion_t L (cdr I)))
+		(cons (list(car I) (func_obj (car I))) (inic_poblacion_t L (cdr I)))
     )
   )
 )
