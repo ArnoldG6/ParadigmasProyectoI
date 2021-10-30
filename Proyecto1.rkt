@@ -167,16 +167,12 @@
 		)
 	)
 )
-; (define generar_n_grupos
-	; (lambda (n_ind eli n_grupos)
-		; (generar_n_grupos_t '() n_ind eli n_grupos)
-	; )
-; )
 (define generar_n_grupos
 	(lambda (n_ind eli n_grupos)
 		(generar_n_grupos_t '() n_ind eli n_grupos)
 	)
 )
+;=========================SELECCIÓN=========================
 (define ordenar_n_grupos_t
 	(lambda (R G);G:grupos, R: lista resultante.
 		(if (equal? '() G)
@@ -190,8 +186,63 @@
 		(ordenar_n_grupos_t '() G)
 	)
 )
-(ordenar_n_grupos(generar_n_grupos 2 #t 4)) ;Generación 0
+(define mas_aptos_grupo ;Retorna los dos individuos más aptos de una lista de individuos I contenida en un grupo.
+	(lambda (I)
+		(list (car (car I)) (car (cdr (car I))))
+	)
+)
+(define mas_aptos_lista_individuos ;Retorna los dos individuos más aptos de una lista de individuos I.
+	(lambda (I)
+		(list (car I) (car (cdr I)))
+	)
+)
+(define mas_aptos_t ;Retorna una lista con los dos individuos más aptos de cada grupo en una generación. G: Grupos, R: Lista resultante
+	(lambda (R G)
+		(if (equal? '() G)
+			R
+			(cons (mas_aptos_lista_individuos (car G)) (mas_aptos_t  R (cdr G)))
+		)
+	)
+)
+(define mas_aptos ;Retorna una lista con los dos individuos más aptos de cada grupo en una generación. G: Grupos, R: Lista resultante
+	(lambda (G)
+		(mas_aptos_t '() G)
+	)
+)
+; (ordenar_n_grupos(generar_n_grupos 2 #t 4)) ;Generación 0
+
+(define (test L) ;Generación 0
+	(printf "Generación 0: ~s.\n" L)
+	(printf "Selección de los más aptos: ~s.\n" (mas_aptos L))
+)
+(test (ordenar_n_grupos(generar_n_grupos 3 #t 3)))
+
+
+;=========================CRUCE=========================
+;aquí va todo lo del cruce xd
+
+
+;=========================MUTACIÓN=========================
+;aquí va todo lo de la mutación xd
+
+(define (seleccion-aleatoria l)
+  (list-ref l (random (length l))))
+
+
+
+;=========================COMPUTAR=========================
+;aquí va todo lo de computar xd
+
+
+;=========================INSERTAR=========================
+;aquí va todo lo de inertar xd
 (exit)
+
+
+
+
+
+
 
 
 
