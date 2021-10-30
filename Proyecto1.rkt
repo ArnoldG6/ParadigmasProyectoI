@@ -190,6 +190,27 @@
 		(ordenar_n_grupos_t '() G)
 	)
 )
+
+;=========================CRUCE=========================
+;aquí va todo lo del cruce xd
+
+
+;=========================MUTACIÓN=========================
+;aquí va todo lo de la mutación xd
+
+(define (seleccion-aleatoria l)
+  (list-ref l (random (length l))))
+
+
+
+;=========================COMPUTAR=========================
+;aquí va todo lo de computar xd
+
+
+;=========================INSERTAR=========================
+;aquí va todo lo de inertar xd
+
+
 (ordenar_n_grupos(generar_n_grupos 2 #t 4)) ;Generación 0
 (exit)
 
