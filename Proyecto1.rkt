@@ -220,8 +220,18 @@
 
 ;=========================CRUCE=========================
 ;aquí va todo lo del cruce xd
+(define cruce
+  (lambda (J K H)
+    (append (take J H) (take-right K (- (length K) H)))
+  )
+)
 
 
+;(cruce '((0 1 1 0 1 1 0 0 0 0) (1 1 0 0 0 0 0 1 0 1) (1 0 1 0 0 0 1 0 0 1) (0 0 0 0 0 0 0 0 1 1) (1 1 1 0 0 0 0 1 0 0)) '((0 0 0 0 0 0 0 1 1 0) (0 0 1 0 0 1 0 1 1 1) (1 1 1 1 0 0 1 0 1 0) (1 1 0 1 0 1 0 1 0 0) (1 1 1 0 0 1 0 1 0 0)) (random 1 5))
+(cruce '(0 1 1 0 1 1 0 0 0 0) '(1 1 0 0 0 0 0 1 0 1) (random 1 11))
+
+(generar_individuos 5)
+(generar_individuos 5)
 ;=========================MUTACIÓN=========================
 ;aquí va todo lo de la mutación xd
 
