@@ -225,11 +225,17 @@
 ;=========================MUTACIÓN=========================
 ;aquí va todo lo de la mutación xd
 
-(define (seleccion-aleatoria l) ;Devuelve un elemento aleatorio de una lista
+(define (seleccion l) ;Devuelve un elemento aleatorio de una lista
   (list-ref l (random (length l)))
  )
 
-(define invertir-valor ;Realiza el cambio de bits para las mutaciones
+(define seleccion_aleatoria ;Devuelve una posicion aleatoria de una lista
+  (lambda (L)
+    (list (random (length L)))
+    )
+ )
+
+(define invertir_valor ;Realiza el cambio de bits para las mutaciones
   (lambda (valor)
     (if (equal? 0 valor)
         1
@@ -238,11 +244,26 @@
   )
 )
 
-(define mutacion
+(define (cambia_valor_lista L indices valores [offset 0])
+  (cond [(null? indices) L] ; no mas cambios, retorna L
+        [(null? L) null]    ; no mas L, retorna null
+        [(= (car indices) offset) ; condicion para cambiar
+         (cons (car valores)
+               (cambia_valor_lista (cdr L) (cdr indices) (cdr valores) (add1 offset)))]
+        [else
+         (cons (car L)    ; sin condicion para cambiar
+               (cambia_valor_lista (cdr L) indices valores (add1 offset)))]))
+
+(define mutacion ;Falta hacer esto alv :'v
   (lambda (L)
-    1
+    (flatten L)
     )
   )
+
+;Pruebas Mutación
+(cambia_valor_lista '(1 0 1 0 0 0 1 1 1 1)
+                    (seleccion_aleatoria '(1 0 1 0 0 0 1 1 1 1))
+                    (list (alelo_rand)))
 
 
 ;=========================COMPUTAR=========================
@@ -253,7 +274,7 @@
 ;aquí va todo lo de inertar xd
 
 
-
+(exit)
 
 
 
