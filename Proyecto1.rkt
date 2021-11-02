@@ -235,7 +235,7 @@
 ;=========================MUTACIÓN=========================
 ;aquí va todo lo de la mutación xd
 
-(define (seleccion l) ;Devuelve un elemento aleatorio de una lista
+(define (seleccion l) ;Devuelve un elemento aleatorio de una lista (No se usa xd)
   (list-ref l (random (length l)))
  )
 
