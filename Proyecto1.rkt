@@ -225,9 +225,24 @@
 ;=========================MUTACIÓN=========================
 ;aquí va todo lo de la mutación xd
 
-(define (seleccion-aleatoria l)
-  (list-ref l (random (length l))))
+(define (seleccion-aleatoria l) ;Devuelve un elemento aleatorio de una lista
+  (list-ref l (random (length l)))
+ )
 
+(define invertir-valor ;Realiza el cambio de bits para las mutaciones
+  (lambda (valor)
+    (if (equal? 0 valor)
+        1
+        0
+    )
+  )
+)
+
+(define mutacion
+  (lambda (L)
+    1
+    )
+  )
 
 
 ;=========================COMPUTAR=========================
@@ -236,7 +251,7 @@
 
 ;=========================INSERTAR=========================
 ;aquí va todo lo de inertar xd
-(exit)
+
 
 
 
