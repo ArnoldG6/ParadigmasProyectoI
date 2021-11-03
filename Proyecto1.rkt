@@ -254,6 +254,7 @@
   )
 )
 
+#|
 (define (cambia_valor_lista L indices valores [offset 0])
   (cond [(null? indices) L] ; no mas cambios, retorna L
         [(null? L) null]    ; no mas L, retorna null
@@ -263,6 +264,17 @@
         [else
          (cons (car L)    ; sin condicion para cambiar
                (cambia_valor_lista (cdr L) indices valores (add1 offset)))]))
+|#
+
+(define (cambia_valor L indices [offset 0])
+  (cond [(null? indices) L] ; no mas cambios, retorna L
+        [(null? L) null]    ; no mas L, retorna null
+        [(= (car indices) offset) ; condicion para cambiar
+               (cambia_valor (cdr L) (cdr indices) (add1 (alelo_rand)))] #|Para realizar el cambio se llama al generador de alelos para cambiar un
+        cromosoma aleatorio|#
+        [else
+         (cons (car L)    ; sin condicion para cambiar
+               (cambia_valor (cdr L) indices (add1 offset)))]))
 
 (define mutacion ;Falta hacer esto alv :'v
   (lambda (L)
@@ -271,9 +283,8 @@
   )
 
 ;Pruebas Mutación
-(cambia_valor_lista '(1 0 1 0 0 0 1 1 1 1)
-                    (seleccion_aleatoria '(1 0 1 0 0 0 1 1 1 1))
-                    (list (alelo_rand)))
+(cambia_valor '(1 0 1 0 0 0 1 1 1 1)
+               (seleccion_aleatoria '(1 0 1 0 0 0 1 1 1 1)))
 
 
 ;=========================COMPUTAR=========================
