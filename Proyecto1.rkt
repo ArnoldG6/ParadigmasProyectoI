@@ -215,7 +215,7 @@
 	(printf "Generación 0: ~s.\n" L)
 	(printf "Selección de los más aptos: ~s.\n" (mas_aptos L))
 )
-; (test (ordenar_n_grupos(generar_n_grupos 3 #t 3)))
+; (test (ordenar_n_grupos(generar_n_grupos 4 #t 3)))
 
 
 ;=========================CRUCE=========================
@@ -232,9 +232,9 @@
 )
 
 ;(cruce '((0 1 1 0 1 1 0 0 0 0) (1 1 0 0 0 0 0 1 0 1) (1 0 1 0 0 0 1 0 0 1) (0 0 0 0 0 0 0 0 1 1) (1 1 1 0 0 0 0 1 0 0)) '((0 0 0 0 0 0 0 1 1 0) (0 0 1 0 0 1 0 1 1 1) (1 1 1 1 0 0 1 0 1 0) (1 1 0 1 0 1 0 1 0 0) (1 1 1 0 0 1 0 1 0 0)) (random 1 5))
-(printf "----------------------------------\n")
+; (printf "----------------------------------\n")
 
-(cruce '(0 1 1 0 1 1 0 0 0 0) '(1 1 0 0 0 0 0 1 0 1) (random 0 11))
+; (cruce '(0 1 1 0 1 1 0 0 0 0) '(1 1 0 0 0 0 0 1 0 1) (random 0 11))
 ; (generar_individuos 5)
 ; (generar_individuos 5)
 ;=========================MUTACIÓN=========================
@@ -299,15 +299,27 @@
 	(cambia_valor_lista I (seleccion_aleatoria I) (list (alelo_rand)))
   )
 )
-(mutar '(1 0 1 0 0 0 1 1 1 1))
+; (mutar '(1 0 1 0 0 0 1 1 1 1))
 ;=========================COMPUTAR=========================
-;aquí va todo lo de computar xd
-
-
+(define resolver_t
+	(lambda (can_gen can_ind elit can_grupos val primeraGen cont)
+	    (if (equal? 0 cont) 
+		(printf"Generación 0: ~s.\n" (list (car(car mas_aptos primeraGen)) (car (cdr mas_aptos primeraGen))))
+		(resolver_t can_gen can_ind elit can_grupos val primeraGen (+ 1 cont))
+		)
+	)
+)
+(define resolver
+	(lambda (can_gen can_ind elit can_grupos val)
+		(resolver_t can_gen can_ind #t can_grupos '() (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) 0)
+		; (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) inicializa la generación 0, con los parámetros dados
+		
+	)
+)
 ;=========================INSERTAR=========================
 ;aquí va todo lo de inertar xd
 
-
+(resolver 3 4 #t 2 '())
 (exit)
 
 
