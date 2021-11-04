@@ -220,15 +220,21 @@
 
 ;=========================CRUCE=========================
 ;aquí va todo lo del cruce xd
-(define cruce
+(define cruce_primer_ind
   (lambda (J K H)
     (append (take J H) (take-right K (- (length K) H)))
   )
 )
-
+(define cruce ;Genera 2 individuos hijos apartir del cruce de 2 individuos padres.
+	(lambda (J K n) ;J individuo 1. K: n: número random entre 0 y lenght de J, siendo len J = len K
+		(list (cruce_primer_ind J K n) (cruce_primer_ind K J n))
+	)
+)
 
 ;(cruce '((0 1 1 0 1 1 0 0 0 0) (1 1 0 0 0 0 0 1 0 1) (1 0 1 0 0 0 1 0 0 1) (0 0 0 0 0 0 0 0 1 1) (1 1 1 0 0 0 0 1 0 0)) '((0 0 0 0 0 0 0 1 1 0) (0 0 1 0 0 1 0 1 1 1) (1 1 1 1 0 0 1 0 1 0) (1 1 0 1 0 1 0 1 0 0) (1 1 1 0 0 1 0 1 0 0)) (random 1 5))
-(cruce '(0 1 1 0 1 1 0 0 0 0) '(1 1 0 0 0 0 0 1 0 1) (random 1 11))
+(printf "----------------------------------\n")
+
+(cruce '(0 1 1 0 1 1 0 0 0 0) '(1 1 0 0 0 0 0 1 0 1) (random 0 11))
 
 (generar_individuos 5)
 (generar_individuos 5)
