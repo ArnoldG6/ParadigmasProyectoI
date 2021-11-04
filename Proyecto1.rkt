@@ -215,7 +215,7 @@
 	(printf "Generación 0: ~s.\n" L)
 	(printf "Selección de los más aptos: ~s.\n" (mas_aptos L))
 )
-(test (ordenar_n_grupos(generar_n_grupos 3 #t 3)))
+; (test (ordenar_n_grupos(generar_n_grupos 3 #t 3)))
 
 
 ;=========================CRUCE=========================
@@ -235,9 +235,8 @@
 (printf "----------------------------------\n")
 
 (cruce '(0 1 1 0 1 1 0 0 0 0) '(1 1 0 0 0 0 0 1 0 1) (random 0 11))
-
-(generar_individuos 5)
-(generar_individuos 5)
+; (generar_individuos 5)
+; (generar_individuos 5)
 ;=========================MUTACIÓN=========================
 ;aquí va todo lo de la mutación xd
 
@@ -260,7 +259,7 @@
   )
 )
 
-#|
+
 (define (cambia_valor_lista L indices valores [offset 0])
   (cond [(null? indices) L] ; no mas cambios, retorna L
         [(null? L) null]    ; no mas L, retorna null
@@ -270,29 +269,37 @@
         [else
          (cons (car L)    ; sin condicion para cambiar
                (cambia_valor_lista (cdr L) indices valores (add1 offset)))]))
-|#
 
-(define (cambia_valor L indices [offset 0])
-  (cond [(null? indices) L] ; no mas cambios, retorna L
-        [(null? L) null]    ; no mas L, retorna null
-        [(= (car indices) offset) ; condicion para cambiar
-               (cambia_valor (cdr L) (cdr indices) (add1 (alelo_rand)))] #|Para realizar el cambio se llama al generador de alelos para cambiar un
-        cromosoma aleatorio|#
-        [else
-         (cons (car L)    ; sin condicion para cambiar
-               (cambia_valor (cdr L) indices (add1 offset)))]))
 
-(define mutacion ;Falta hacer esto alv :'v
-  (lambda (L)
-    (flatten L)
-    )
-  )
+; (define (cambia_valor L indices [offset 0])
+  ; (cond [(null? indices) L] ; no mas cambios, retorna L
+        ; [(null? L) null]    ; no mas L, retorna null
+        ; [(= (car indices) offset) ; condicion para cambiar
+               ; (cambia_valor (cdr L) (cdr indices) (add1 (alelo_rand)))] #|Para realizar el cambio se llama al generador de alelos para cambiar un
+        ; cromosoma aleatorio|#
+        ; [else
+         ; (cons (car L)    ; sin condicion para cambiar
+               ; (cambia_valor (cdr L) indices (add1 offset)))]))
+
+; (define mutacion ;Falta hacer esto alv :'v
+  ; (lambda (L)
+    ; (flatten L)
+    ; )
+  ; )
 
 ;Pruebas Mutación
-(cambia_valor '(1 0 1 0 0 0 1 1 1 1)
-               (seleccion_aleatoria '(1 0 1 0 0 0 1 1 1 1)))
+; (cambia_valor '(1 0 1 0 0 0 1 1 1 1)
+               ; (seleccion_aleatoria '(1 0 1 0 0 0 1 1 1 1)))
 
-
+; (cambia_valor_lista '(1 0 1 0 0 0 1 1 1 1)
+                     ; (seleccion_aleatoria '(1 0 1 0 0 0 1 1 1 1))
+                     ; (list (alelo_rand)))
+(define mutar
+  (lambda (I) ;Individuo: I
+	(cambia_valor_lista I (seleccion_aleatoria I) (list (alelo_rand)))
+  )
+)
+(mutar '(1 0 1 0 0 0 1 1 1 1))
 ;=========================COMPUTAR=========================
 ;aquí va todo lo de computar xd
 
