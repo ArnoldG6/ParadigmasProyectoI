@@ -304,7 +304,8 @@
 (define resolver_t
 	(lambda (can_gen can_ind elit can_grupos val primeraGen cont)
 	    (if (equal? 0 cont) 
-		(printf"Generación 0: ~s.\n" (list (car(car mas_aptos primeraGen)) (car (cdr mas_aptos primeraGen))))
+		(printf"Generación 0: ~s.\n" (list (car(car (mas_aptos primeraGen))) (car (cdr (car (mas_aptos primeraGen))))));cambiar esto para que hagas sort por grupos
+		;(printf"Generación 0: ~s.\n" primeraGen)
 		(resolver_t can_gen can_ind elit can_grupos val primeraGen (+ 1 cont))
 		)
 	)
