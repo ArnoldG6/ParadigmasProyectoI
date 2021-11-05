@@ -22,13 +22,13 @@
 (define (alelo_rand)  ;Genera un número random del conjunto {0,1}.
     (+ 0 (random 2)))
 
-	
+
 (define generar_individuo_t ;Genera un individuo con una cadena genética de n alelos, usando "tail recursion".
   (lambda (m n L)
     (if (= m n)
         L
-        (cons (alelo_rand) (generar_individuo_t(+ m 1) n L)); 
-		
+        (cons (alelo_rand) (generar_individuo_t(+ m 1) n L));
+
     )
   )
 )
@@ -80,7 +80,7 @@
 						; de su función objetivo
 						;L: lista resultante.
 						;I: Lista de individuos
-(define inic_poblacion_t 
+(define inic_poblacion_t
   (lambda (L I)
 	(if (equal? '() I)
 		L
@@ -95,8 +95,8 @@
 )
 (define max
   (lambda (x y)
-    (if (< x y) 
-	   y 
+    (if (< x y)
+	   y
 	   x
 	)
   )
@@ -104,15 +104,15 @@
 (define individuo_mas_apto ;compara por valor de función objetivo y devuelve al individuo más apto.
   (lambda (x y)
     (if (< (car(cdr x)) (car(cdr y)))
-	   x 
+	   x
 	   y
 	)
   )
 )
 (define mejor_individuo_pob_t ;Devuelve el mejor individuo de una lista según la función objetivo.
-  (lambda (L i) ;i: individuo 
+  (lambda (L i) ;i: individuo
   	(if (equal? '() L)
-		i 
+		i
 		(mejor_individuo_pob_t (cdr L) (individuo_mas_apto i (car L)))
     )
   )
@@ -146,7 +146,7 @@
 		(if (equal? '() L)
 			R
 			(ordenar_poblacion_t (cons (mejor_individuo_pob L) R) (eliminar_mejor_ind L))
-		)	
+		)
 	)
 )
 (define ordenar_poblacion
@@ -301,20 +301,29 @@
 )
 ; (mutar '(1 0 1 0 0 0 1 1 1 1))
 ;=========================COMPUTAR=========================
+(define obtener_mejores_padres_gen
+    (lambda (GEN)
+        (list (car(car (mas_aptos GEN))) (car (cdr (car (mas_aptos GEN)))))
+    )
+)
 (define resolver_t
-	(lambda (can_gen can_ind elit can_grupos val primeraGen cont)
-	    (if (equal? 0 cont) 
-		(printf"Generación 0: ~s.\n" (list (car(car (mas_aptos primeraGen))) (car (cdr (car (mas_aptos primeraGen))))));cambiar esto para que hagas sort por grupos
-		;(printf"Generación 0: ~s.\n" primeraGen)
-		(resolver_t can_gen can_ind elit can_grupos val primeraGen (+ 1 cont))
+	(lambda (can_gen can_ind elit can_grupos val primeraGen cont ind_cruz)
+        (if (equal? can_gen cont)
+            ;el individuo más apto
+            ;seguir buscando al ind más apto
+            ;
+        )
+	    (if (equal? 0 cont)
+		(printf"Generación ~a: ~s.\n" cont (obtener_mejores_padres_gen primeraGen));cambiar esto para que hagas sort por grupos
+		(resolver_t can_gen can_ind elit can_grupos val primeraGen (+ 1 cont) (list (car (car (obtener_mejores_padres_gen primeraGen))) (car (cdr (obtener_mejores_padres_gen primeraGen)))))
 		)
 	)
 )
 (define resolver
 	(lambda (can_gen can_ind elit can_grupos val)
-		(resolver_t can_gen can_ind #t can_grupos '() (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) 0)
+		(resolver_t can_gen can_ind #t can_grupos '() (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) 0 '())
 		; (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) inicializa la generación 0, con los parámetros dados
-		
+
 	)
 )
 ;=========================INSERTAR=========================
@@ -322,12 +331,3 @@
 
 (resolver 3 4 #t 2 '())
 (exit)
-
-
-
-
-
-
-
-
-
