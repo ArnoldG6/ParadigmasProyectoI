@@ -281,7 +281,7 @@
          ; (cons (car L)    ; sin condicion para cambiar
                ; (cambia_valor (cdr L) indices (add1 offset)))]))
 
-; (define mutacion ;Falta hacer esto alv :'v
+; (define mutacion ;Falta hacer esto
   ; (lambda (L)
     ; (flatten L)
     ; )
@@ -307,21 +307,46 @@
     )
 )
 (define resolver_t
-	(lambda (can_gen can_ind elit can_grupos val primeraGen cont ind_cruz)
-        (if (equal? can_gen cont)
-            ;el individuo más apto
-            ;seguir buscando al ind más apto
-            ;
+	(lambda
+        (
+        can_gen
+        can_ind
+        elit
+        can_grupos
+        val
+        generacion_actual
+        cont
+        mas_apto_todo
         )
-	    (if (equal? 0 cont)
-		(printf"Generación ~a: ~s.\n" cont (obtener_mejores_padres_gen primeraGen));cambiar esto para que hagas sort por grupos
-		(resolver_t can_gen can_ind elit can_grupos val primeraGen (+ 1 cont) (list (car (car (obtener_mejores_padres_gen primeraGen))) (car (cdr (obtener_mejores_padres_gen primeraGen)))))
-		)
-	)
+        (if (equal? (- can_gen 1) cont)
+            (printf "Individuo más apto: ~s.\n" mas_apto_todo)
+            (begin
+                (printf"Generación ~a: ~s." cont (obtener_mejores_padres_gen generacion_actual)) ;cambiar esto para que hagas sort por grupos
+                (define c (cruce (car (obtener_mejores_padres_gen generacion_actual)) (car (cdr (obtener_mejores_padres_gen generacion_actual))))); cruce (I1,I2)
+                (define N1 (mutar (car c)))
+                (define N2 (mutar (car (cdr c))))
+                (define N1_func (list N1 (func_obj N1))) ;N1 con fitness.
+                (define N2_func (list N2 (func_obj N2))) ;N2 con fitness.
+                (printf "Hijos: ~s \n" (list N1_func N2_func))
+                (resolver_t
+                can_gen
+                can_ind
+                elit
+                can_grupos
+                val
+                (list N1_func N2_func)
+                (+ cont 1)
+                (individuo_mas_apto mas_apto_todo (mejor_individuo_pob (mas_aptos generacion_actual)))
+                )
+            )
+        )
+    )
 )
+
 (define resolver
 	(lambda (can_gen can_ind elit can_grupos val)
-		(resolver_t can_gen can_ind #t can_grupos '() (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) 0 '())
+		(resolver_t can_gen can_ind #t can_grupos '() (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) 0
+		(car (car (car (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos))))))
 		; (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) inicializa la generación 0, con los parámetros dados
 
 	)
