@@ -338,7 +338,7 @@
 	)
 )
 
-(define resolver_t
+(define resolver_t ;Estoy en notación de Perra de las funciones
 	(lambda
         (
         can_gen
