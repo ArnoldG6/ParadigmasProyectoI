@@ -322,25 +322,59 @@
             (printf "Individuo más apto: ~s.\n" mas_apto_todo)
             (begin
                 (printf"Generación ~a: ~s." cont (obtener_mejores_padres_gen generacion_actual)) ;cambiar esto para que hagas sort por grupos
-                (define c (cruce (car (obtener_mejores_padres_gen generacion_actual)) (car (cdr (obtener_mejores_padres_gen generacion_actual))))); cruce (I1,I2)
-                (define N1 (mutar (car c)))
-                (define N2 (mutar (car (cdr c))))
-                (define N1_func (list N1 (func_obj N1))) ;N1 con fitness.
-                (define N2_func (list N2 (func_obj N2))) ;N2 con fitness.
-                (printf "Hijos: ~s \n" (list N1_func N2_func))
+                
+				;(define c (cruce (car (obtener_mejores_padres_gen generacion_actual)) (car (cdr (obtener_mejores_padres_gen generacion_actual))))); cruce (I1,I2)
+                ;(c generacion_actual )				
+				;(define N1 (mutar (car c)))
+                ;(N1 (c generacion_actual ))				
+				;(define N2 (mutar (car (cdr c))))
+                ;(N2 (c generacion_actual ))				
+				;(define N1_func (list N1 (func_obj N1))) ;N1 con fitness.
+                ;(N1_func (N1 (c generacion_actual )))				
+				;(define N2_func (list N2 (func_obj N2))) ;N2 con fitness.
+                ;(N2_func (N2 (c generacion_actual )))
+				
+		;(printf "Hijos: ~s \n" (list (N1_func (N1 (c generacion_actual))) (N2_func (N2 (c generacion_actual)))))
                 (resolver_t
                 can_gen
                 can_ind
                 elit
                 can_grupos
                 val
-                (list N1_func N2_func)
+                ;(list (N1_func (N1 (c generacion_actual ))) (N2_func (N2 (c generacion_actual ))))
+
+                (list(N1_func (N1 (c generacion_actual )))  (N2_func (N2 (c generacion_actual ))) )
                 (+ cont 1)
                 (individuo_mas_apto mas_apto_todo (mejor_individuo_pob (mas_aptos generacion_actual)))
                 )
             )
         )
     )
+)
+
+(define c (lambda (gen_actual)
+		(cruce (car (car (obtener_mejores_padres_gen gen_actual)) ) (car (car (cdr (obtener_mejores_padres_gen gen_actual)))) (abs (random 0 11)))
+	)
+)
+
+(define N1 (lambda (c) 
+		(mutar (car c))
+	)
+)
+
+(define N2 (lambda (c)
+		(mutar (car c))
+	)
+)
+
+(define N1_func (lambda (n1)
+		(list n1(func_obj n1))	
+	)
+)
+
+(define N2_func (lambda (n2)
+		(list n2(func_obj n2))
+	)
 )
 
 (define resolver
