@@ -379,8 +379,10 @@
 
 (define resolver
 	(lambda (can_gen can_ind elit can_grupos val)
-		(resolver_t can_gen can_ind #t can_grupos '() (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) 0
-		(car (car (car (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos))))))
+		(resolver_t
+                 can_gen can_ind #t can_grupos '() (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) 0
+                 (car (car (car (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)))))
+                )
 		; (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) inicializa la generación 0, con los parámetros dados
 
 	)
