@@ -103,7 +103,7 @@
 )
 (define individuo_mas_apto ;compara por valor de función objetivo y devuelve al individuo más apto.
   (lambda (x y)
-    (if (< (car(cdr x)) (car(cdr y)))
+    (if (<= (car(cdr x)) (car(cdr y)))
 	   x
 	   y
 	)
@@ -222,7 +222,7 @@
 ;aquí va todo lo del cruce xd
 (define cruce_primer_ind
   (lambda (J K H)
-    (append (take J H) (take-right K (- (length K) H)))
+    (append (take J H) (take-right K (abs(- (length K) H))))
   )
 )
 (define cruce ;Genera 2 individuos hijos apartir del cruce de 2 individuos padres.
@@ -234,7 +234,7 @@
 ;(cruce '((0 1 1 0 1 1 0 0 0 0) (1 1 0 0 0 0 0 1 0 1) (1 0 1 0 0 0 1 0 0 1) (0 0 0 0 0 0 0 0 1 1) (1 1 1 0 0 0 0 1 0 0)) '((0 0 0 0 0 0 0 1 1 0) (0 0 1 0 0 1 0 1 1 1) (1 1 1 1 0 0 1 0 1 0) (1 1 0 1 0 1 0 1 0 0) (1 1 1 0 0 1 0 1 0 0)) (random 1 5))
 ; (printf "----------------------------------\n")
 
-; (cruce '(0 1 1 0 1 1 0 0 0 0) '(1 1 0 0 0 0 0 1 0 1) (random 0 11))
+;(cruce '(0 1 1 0 1 1 0 0 0 0) '(1 1 0 0 0 0 0 1 0 1) (random 0 11))
 ; (generar_individuos 5)
 ; (generar_individuos 5)
 ;=========================MUTACIÓN=========================
@@ -306,6 +306,7 @@
         (list (car(car (mas_aptos GEN))) (car (cdr (car (mas_aptos GEN)))))
     )
 )
+
 (define resolver_t
 	(lambda
         (
@@ -321,7 +322,7 @@
         (if (equal? (- can_gen 1) cont)
             (printf "Individuo más apto: ~s.\n" mas_apto_todo)
             (begin
-                (printf"Generación ~a: ~s." cont (obtener_mejores_padres_gen generacion_actual)) ;cambiar esto para que hagas sort por grupos
+                (printf"Generación ~a: ~s.\n" cont (obtener_mejores_padres_gen generacion_actual)) ;cambiar esto para que hagas sort por grupos
                 
 				;(define c (cruce (car (obtener_mejores_padres_gen generacion_actual)) (car (cdr (obtener_mejores_padres_gen generacion_actual))))); cruce (I1,I2)
                 ;(c generacion_actual )				
@@ -333,8 +334,8 @@
                 ;(N1_func (N1 (c generacion_actual )))				
 				;(define N2_func (list N2 (func_obj N2))) ;N2 con fitness.
                 ;(N2_func (N2 (c generacion_actual )))
-				
-		;(printf "Hijos: ~s \n" (list (N1_func (N1 (c generacion_actual))) (N2_func (N2 (c generacion_actual)))))
+			
+		;(printf "Alv: ~s \n" (list (c generacion_actual) ))
                 (resolver_t
                 can_gen
                 can_ind
@@ -343,9 +344,13 @@
                 val
                 ;(list (N1_func (N1 (c generacion_actual ))) (N2_func (N2 (c generacion_actual ))))
 
-                (list(N1_func (N1 (c generacion_actual )))  (N2_func (N2 (c generacion_actual ))) )
+                ;(list(N1_func (N1 (c generacion_actual )))  (N2_func (N2 (c generacion_actual ))) )
+                (list (car(cruce (car(obtener_mejores_padres_gen generacion_actual)) (car(cdr(obtener_mejores_padres_gen generacion_actual)))))
+                      (cdr(cruce (car(obtener_mejores_padres_gen generacion_actual)) (car(cdr(obtener_mejores_padres_gen generacion_actual)))))
+                      )
                 (+ cont 1)
-                (individuo_mas_apto mas_apto_todo (mejor_individuo_pob (mas_aptos generacion_actual)))
+                 
+                (individuo_mas_apto mas_apto_todo  (car(car(mas_aptos generacion_actual))))
                 )
             )
         )
@@ -353,7 +358,8 @@
 )
 
 (define c (lambda (gen_actual)
-		(cruce (car (car (obtener_mejores_padres_gen gen_actual)) ) (car (car (cdr (obtener_mejores_padres_gen gen_actual)))) (abs (random 0 11)))
+            
+		(cruce (car (car (obtener_mejores_padres_gen gen_actual)) ) (car (car (cdr (obtener_mejores_padres_gen gen_actual)))) (random 0 11))
 	)
 )
 
@@ -363,7 +369,7 @@
 )
 
 (define N2 (lambda (c)
-		(mutar (car c))
+		(mutar (car(cdr c)))
 	)
 )
 
@@ -381,7 +387,7 @@
 	(lambda (can_gen can_ind elit can_grupos val)
 		(resolver_t
                  can_gen can_ind #t can_grupos '() (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) 0
-                 (car (car (car (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)))))
+                 (car (car (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos))))
                 )
 		; (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) inicializa la generación 0, con los parámetros dados
 
