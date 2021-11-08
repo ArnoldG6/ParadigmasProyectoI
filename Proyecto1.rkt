@@ -307,6 +307,37 @@
     )
 )
 
+(define c (lambda (gen_actual n) 
+            
+             (list
+              (list (N1 (car(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) )
+                    (func_obj (N1 (car(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) ) )
+
+              (list (N2 (car(cdr(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) )
+                    (func_obj (N2 (car(cdr(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) ) )
+                    )
+              
+             ;(N_func (N1 (car(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) )
+             ;(N_func (N2 (car(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) )
+            )
+    )
+)
+
+(define N1 (lambda (aa) 
+		(mutar aa)
+	)
+)
+
+(define N2 (lambda (aa)
+		(mutar aa)
+	)
+)
+
+(define N_func (lambda (m1)
+		(list m1 (func_obj m1) )	
+	)
+)
+
 (define resolver_t
 	(lambda
         (
@@ -322,7 +353,7 @@
         (if (equal? (- can_gen 1) cont)
             (printf "Individuo más apto: ~s.\n" mas_apto_todo)
             (begin
-                (printf"Generación ~a: ~s.\n" cont (obtener_mejores_padres_gen generacion_actual)) ;cambiar esto para que hagas sort por grupos
+                (printf"Generación ~a: ~s.\n" cont  generacion_actual) ;cambiar esto para que hagas sort por grupos
                 
 				;(define c (cruce (car (obtener_mejores_padres_gen generacion_actual)) (car (cdr (obtener_mejores_padres_gen generacion_actual))))); cruce (I1,I2)
                 ;(c generacion_actual )				
@@ -345,7 +376,7 @@
                 ;(list (N1_func (N1 (c generacion_actual ))) (N2_func (N2 (c generacion_actual ))))
 
                 ;(list(N1_func (N1 (c generacion_actual )))  (N2_func (N2 (c generacion_actual ))) )
-                (c generacion_actual (random 0 11))
+                (c generacion_actual (random 0 11) )
                 (+ cont 1)
                  
                 (individuo_mas_apto mas_apto_todo  (car(car(mas_aptos generacion_actual))))
@@ -353,29 +384,6 @@
             )
         )
     )
-)
-
-(define c (lambda (gen_actual n)
-            (list
-             (N_func (N1 (car(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) )
-             (N_func (N2 (cdr(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) )
-            )
-    )
-)
-
-(define N1 (lambda (c) 
-		(mutar (car c))
-	)
-)
-
-(define N2 (lambda (c)
-		(mutar (car(cdr c)))
-	)
-)
-
-(define N_func (lambda (n1)
-		(list n1(func_obj n1))	
-	)
 )
 
 (define resolver
