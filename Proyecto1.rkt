@@ -103,7 +103,7 @@
 )
 (define individuo_mas_apto ;compara por valor de función objetivo y devuelve al individuo más apto.
   (lambda (x y)
-    (if (<= (car(cdr x)) (car(cdr y)))
+    (if (< (car(cdr x)) (car(cdr y)))
 	   x
 	   y
 	)
@@ -303,9 +303,10 @@
 ;=========================COMPUTAR=========================
 (define obtener_mejores_padres_gen
     (lambda (GEN)
-          (list (car(car (mas_aptos GEN))) (car (cdr (car (mas_aptos GEN)))))
+          (list (car(car (mas_aptos (ordenar_n_grupos GEN)))) (car (cdr (car (mas_aptos (ordenar_n_grupos GEN))))))
     )
 )
+ 
 #|
 (define generar_gen_hija_t (lambda
         (Padre1 Padre2 list_result cant_indiv r)
@@ -384,7 +385,7 @@
                     elit
                     can_grupos
                     val
-                    (ordenar_n_grupos '((
+                    '((
                        ((0 0 1 0 1 1 1 1 1 1) 7) 
                        ((1 0 1 1 1 1 0 0 1 1) 7) 
                        ((0 0 0 0 1 1 0 0 0 1) 3) 
@@ -392,46 +393,37 @@
      
                       (((1 0 1 0 1 0 1 1 0 1) 6) 
                        ((1 1 1 0 1 0 0 0 1 1) 6) 
-                       ((1 0 0 1 1 0 1 1 0 0) 5) 
-                      ( (1 1 1 1 1 1 0 0 0 0) 6))))
+                       ((1 1 1 1 1 0 1 1 1 1) 9) 
+                      ( (1 1 1 1 1 1 0 0 0 0) 6)))
                     
                     cont
                     ;(car(obtener_mejores_padres_gen (ordenar_n_grupos generacion_actual)))
-                    (car(obtener_mejores_padres_gen (ordenar_n_grupos '((
+                    (car(obtener_mejores_padres_gen '((
                                 ((0 0 1 0 1 1 1 1 1 1) 7) 
                                 ((1 0 1 1 1 1 0 0 1 1) 7) 
                                 ((0 0 0 0 1 1 0 0 0 1) 3) 
                                 ((0 0 0 0 0 1 0 0 0 0) 1))
                                (((1 0 1 0 1 0 1 1 0 1) 6) 
                                 ((1 1 1 0 1 0 0 0 1 1) 6) 
-                                ((1 0 0 1 1 0 1 1 0 0) 5) 
+                                ((1 1 1 1 1 0 1 1 1 1) 9) 
                                 ((1 1 1 1 1 1 0 0 0 0) 6)
-                                )))))
+                                ))))
                     )
                     (begin
                       (if (equal? (car(cdr mas_apto_todo)) 10)
                           (printf "Generación ~a Individuo más apto: ~s.\n" cont mas_apto_todo)
                           (begin
                             (printf "Generación ~a: ~s.\n" cont generacion_actual)               
-                            (printf "Los dos más pichudos de la vida de la generación: ~s.\n" (obtener_mejores_padres_gen (ordenar_n_grupos generacion_actual)))
+                            (printf "Los dos más aptos de la generación: ~s.\n" (obtener_mejores_padres_gen (ordenar_n_grupos generacion_actual)))
                             (resolver_t
                              can_gen
                              can_ind
                              elit
                              can_grupos
                              val
-                             (ordenar_n_grupos '((
-                                ((0 0 1 0 1 1 1 1 1 1) 7) 
-                                ((1 0 1 1 1 1 0 0 1 1) 7) 
-                                ((0 0 0 0 1 1 0 0 0 1) 3) 
-                                ((0 0 0 0 0 1 0 0 0 0) 1))
-                               (((1 0 1 0 1 0 1 1 0 1) 6) 
-                                ((1 1 1 0 1 0 0 0 1 1) 6) 
-                                ((1 0 0 1 1 0 1 1 0 0) 5) 
-                                ((1 1 1 1 1 1 0 0 0 0) 6)
-                                )))
+                             generacion_actual
                              (+ cont 1)
-                             (individuo_mas_apto mas_apto_todo  (car (obtener_mejores_padres_gen  (ordenar_n_grupos generacion_actual))))
+                             (individuo_mas_apto mas_apto_todo (car (obtener_mejores_padres_gen generacion_actual)))
                              )
                            )
                        )
@@ -445,9 +437,8 @@
 (define resolver
 	(lambda (can_gen can_ind elit can_grupos val)
 		(resolver_t
-                 can_gen can_ind #t can_grupos '() (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) 0
-                 '()
-                )
+                 can_gen can_ind #t can_grupos '() (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) 0 '()
+        )
 		; (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) inicializa la generación 0, con los parámetros dados
 
 	)
@@ -455,7 +446,7 @@
 ;=========================INSERTAR=========================
 ;aquí va todo lo de inertar xd
 
-(resolver 5000 4 #t 2 '())
+(resolver 50 4 #t 2 '())
 ;(obtener_mejores_padres_gen '((((0 0 1 0 1 1 1 1 1 1) 7) ((1 0 1 1 1 1 0 0 1 1) 7) ((0 0 0 0 1 1 0 0 0 1) 3) ((0 0 0 0 0 1 0 0 0 0) 1)) (((1 0 1 0 1 0 1 1 0 1) 6) ((1 1 1 0 1 0 0 0 1 1) 6) ((1 0 0 1 1 0 1 1 0 0) 5) ((1 1 0 1 1 0 0 0 1 0) 5))) )
 ;(obtener_mejores_padres_gen '(((0 0 1 0 1 1 1 0 1 1) 7) ((1 0 1 1 1 1 0 0 1 1) 6)) )
 ; (ordenar_n_grupos '((
