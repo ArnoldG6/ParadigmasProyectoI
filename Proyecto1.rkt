@@ -10,9 +10,9 @@
 ; 2do ciclo 2021, grupo 01
 ; Proyecto 1
 ;
-; A00148103 González Carvajal, Miguel
-; 117620480 González Quesada, Arnoldo
-; 117960315 González         Ocampo Marín, Victor
+; A00148103 González Carvajal, Miguel GRUPO 3PM
+; 117620480 González Quesada, Arnoldo GRUPO 3PM
+; 117960315 Ocampo Marín, Victor      GRUPO 3PM
 ;
 ; ===============================================
 ;
