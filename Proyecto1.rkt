@@ -282,29 +282,6 @@
 )
 ; (mutar '(1 0 1 0 0 0 1 1 1 1))
 ;=========================COMPUTAR=========================
-(define obtener_mejores_padres_gen
-    (lambda (GEN)
-          (list (car(car (mas_aptos (ordenar_n_grupos GEN)))) (car (car (cdr (mas_aptos (ordenar_n_grupos GEN))))))
-    )
-)
- 
-; (define (generar_grupo_hijo_t padres cant_ind resultado);padres: ((padre1,fitness padre1),(padre2, fitness padre2))
-	; (if (equal? 0 cant_ind)
-		; resultado
-		; (generar_grupo_hijo_t padres (- cant_ind 1) ())
-	; )
-; )
-; (define generar_grupo_hijo;Genera grupo en basado en el cruce y mutación de dos padres
-; )
-; (define generar_gen_hija_t ;Genera una nueva generación basado en el cruce y mutación de dos padres
-	; (lambda (padre1 padre2 resultado cant_ind cont)
-		; (if (equal? 0 cont)
-			; (generar_gen_hija_t 
-			; padre1 padre2 (append (list padre1 padre2) ()) cant_ind (+ cont 1))
-		; )
-	; )
-; )
-
 (define (c_2 P1)
 	(list 
 		P1
@@ -319,6 +296,36 @@
 		) 
     )
 )
+(define obtener_mejores_padres_gen
+    (lambda (GEN)
+          (list (car(car (mas_aptos (ordenar_n_grupos GEN)))) (car (car (cdr (mas_aptos (ordenar_n_grupos GEN))))))
+    )
+)
+ 
+(define (generar_grupo_hijo_t padres cant_ind resultado);padres: ((padre1,fitness padre1),(padre2, fitness padre2))
+	(if (equal? 0 cant_ind)
+		resultado
+		(if (equal? 0 (random 0 2))
+			(generar_grupo_hijo_t padres (- cant_ind 1) (cons (car (c padres (random 0 11))) resultado))
+			(generar_grupo_hijo_t padres (- cant_ind 1) (cons (car (cdr (c padres (random 0 11)))) resultado))
+		)
+	)
+)
+(define (generar_grupo_hijo padres cant_ind);padres: ((padre1,fitness padre1),(padre2, fitness padre2))
+	(generar_grupo_hijo_t padres cant_ind '())
+)
+; (define generar_grupo_hijo;Genera grupo en basado en el cruce y mutación de dos padres
+; )
+; (define generar_gen_hija_t ;Genera una nueva generación basado en el cruce y mutación de dos padres
+	; (lambda (padre1 padre2 resultado cant_ind cont)
+		; (if (equal? 0 cont)
+			; (generar_gen_hija_t 
+			; padre1 padre2 (append (list padre1 padre2) ()) cant_ind (+ cont 1))
+		; )
+	; )
+; )
+
+
 
 (define resolver_t
     (lambda
@@ -399,5 +406,6 @@
 	)
 )
 ; (resolver 50 4 #t 2 '())
-(c '(((1 1 1 1 1 1 1 1 0 0) 8) ((0 0 1 0 1 1 1 1 1 1) 7)) (random 0 11))
+; (c '(((1 1 1 1 1 1 1 1 0 0) 8) ((0 0 1 0 1 1 1 1 1 1) 7)) (random 0 11))
+(generar_grupo_hijo '(((1 1 1 1 1 1 1 1 0 0) 8) ((0 0 1 0 1 1 1 1 1 1) 7)) 3)
 ;(exit)
