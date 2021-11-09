@@ -395,7 +395,6 @@
                        ((1 1 1 0 1 0 0 0 1 1) 6) 
                        ((1 1 1 1 1 0 1 1 1 1) 9) 
                       ( (1 1 1 1 1 1 0 0 0 0) 6)))
-                    
                     cont
                     ;(car(obtener_mejores_padres_gen (ordenar_n_grupos generacion_actual)))
                     (car(obtener_mejores_padres_gen '((
@@ -413,8 +412,9 @@
                       (if (equal? (car(cdr mas_apto_todo)) 10)
                           (printf "Generación ~a Individuo más apto: ~s.\n" cont mas_apto_todo)
                           (begin
-                            (printf "Generación ~a: ~s.\n" cont generacion_actual)               
+                            (printf "Generación ~a: ~s.\n" cont (ordenar_n_grupos generacion_actual))              
                             (printf "Los dos más aptos de la generación: ~s.\n" (obtener_mejores_padres_gen generacion_actual))
+							(printf "Los dos más aptos de la generación: ~s.\n" generacion_actual)
                             (resolver_t
                              can_gen
                              can_ind
