@@ -12,7 +12,7 @@
 ;
 ; A00148103 González Carvajal, Miguel
 ; 117620480 González Quesada, Arnoldo
-; 117960315          Ocampo Marín, Victor
+; 117960315 González         Ocampo Marín, Victor
 ;
 ; ===============================================
 ;
@@ -269,25 +269,6 @@
         [else
          (cons (car L)    ; sin condicion para cambiar
                (cambia_valor_lista (cdr L) indices valores (add1 offset)))]))
-
-
-; (define (cambia_valor L indices [offset 0])
-  ; (cond [(null? indices) L] ; no mas cambios, retorna L
-        ; [(null? L) null]    ; no mas L, retorna null
-        ; [(= (car indices) offset) ; condicion para cambiar
-               ; (cambia_valor (cdr L) (cdr indices) (add1 (alelo_rand)))] #|Para realizar el cambio se llama al generador de alelos para cambiar un
-        ; cromosoma aleatorio|#
-        ; [else
-         ; (cons (car L)    ; sin condicion para cambiar
-               ; (cambia_valor (cdr L) indices (add1 offset)))]))
-
-; (define mutacion ;Falta hacer esto
-  ; (lambda (L)
-    ; (flatten L)
-    ; )
-  ; )
-
-;Pruebas Mutación
 ; (cambia_valor '(1 0 1 0 0 0 1 1 1 1)
                ; (seleccion_aleatoria '(1 0 1 0 0 0 1 1 1 1)))
 
@@ -321,18 +302,6 @@
 
 
 (define c (lambda (gen_actual n) 
-        ;(if (equal? (length gen_actual) 1)
-                
-            ;(list
-                 ;(list (N1 (car(cruce (car (car(gen_actual))) (car (car(cdr(gen_actual)))) n ) ) )
-                 ;      (func_obj (N1 (car(cruce (car (car(gen_actual))) (car (car(cdr(gen_actual)))) n ) ) ) ) )
-
-                ; (list (N2 (car(cdr(cruce (car (car(gen_actual))) (car (car(cdr(gen_actual)))) n ) ) ) )
-               ;        (func_obj (N2 (car(cdr(cruce (car (car(gen_actual))) (car (car(cdr(gen_actual)))) n ) ) ) ) )
-              ;         )
-             ;) 
-
-            
              (list
                  (list (N1 (car(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) )
                        (func_obj (N1 (car(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) ) )
@@ -340,9 +309,6 @@
                  (list (N2 (car(cdr(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) )
                        (func_obj (N2 (car(cdr(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) ) )
                        )
-              
-                 ;(N_func (N1 (car(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) )
-                 ;(N_func (N2 (car(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) )
              ) 
         ;)
     )
@@ -362,8 +328,7 @@
 		(list m1 (func_obj m1) )	
 	)
 )
-;Testeando con datos quemados
-(define resolver_t ;Estoy en notación de Perra de las funciones
+(define resolver_t
     (lambda
         (
         can_gen
@@ -393,7 +358,7 @@
      
                       (((1 0 1 0 1 0 1 1 0 1) 6) 
                        ((1 1 1 0 1 0 0 0 1 1) 6) 
-                       ((1 1 1 1 1 0 1 1 1 1) 9) 
+                       ((1 1 1 1 1 1 1 1 1 1) 10) 
                       ( (1 1 1 1 1 1 0 0 0 0) 6)))
                     cont
                     ;(car(obtener_mejores_padres_gen (ordenar_n_grupos generacion_actual)))
@@ -404,7 +369,7 @@
                                 ((0 0 0 0 0 1 0 0 0 0) 1))
                                (((1 0 1 0 1 0 1 1 0 1) 6) 
                                 ((1 1 1 0 1 0 0 0 1 1) 6) 
-                                ((1 1 1 1 1 0 1 1 1 1) 9) 
+                                ((1 1 1 1 1 0 1 1 1 1) 10) 
                                 ((1 1 1 1 1 1 0 0 0 0) 6)
                                 ))))
                     )
@@ -439,37 +404,7 @@
 		(resolver_t
                  can_gen can_ind #t can_grupos '() (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) 0 '()
         )
-		; (ordenar_n_grupos(generar_n_grupos can_ind #t can_grupos)) inicializa la generación 0, con los parámetros dados
-
 	)
 )
-;=========================INSERTAR=========================
-;aquí va todo lo de inertar xd
-
 (resolver 50 4 #t 2 '())
-;(obtener_mejores_padres_gen '((((0 0 1 0 1 1 1 1 1 1) 7) ((1 0 1 1 1 1 0 0 1 1) 7) ((0 0 0 0 1 1 0 0 0 1) 3) ((0 0 0 0 0 1 0 0 0 0) 1)) (((1 0 1 0 1 0 1 1 0 1) 6) ((1 1 1 0 1 0 0 0 1 1) 6) ((1 0 0 1 1 0 1 1 0 0) 5) ((1 1 0 1 1 0 0 0 1 0) 5))) )
-;(obtener_mejores_padres_gen '(((0 0 1 0 1 1 1 0 1 1) 7) ((1 0 1 1 1 1 0 0 1 1) 6)) )
-; (ordenar_n_grupos '((
-                                ; ((0 0 1 0 1 1 1 1 1 1) 7) 
-                                ; ((1 0 1 1 1 1 0 0 1 1) 7) 
-                                ; ((0 0 0 0 1 1 0 0 0 1) 3) 
-                                ; ((0 0 0 0 0 1 0 0 0 0) 1))
-                               ; (((1 0 1 0 1 0 1 1 0 1) 6) 
-                                ; ((1 1 1 0 1 0 0 0 1 1) 6) 
-                                ; ((1 0 0 1 1 0 1 1 0 0) 5) 
-                                ; ((1 1 1 1 1 1 1 1 1 1) 10)
-                                ; )))
-; (obtener_mejores_padres_gen                              '((
-                                ; ((0 0 1 0 1 1 1 1 1 1) 7) 
-                                ; ((1 0 1 1 1 1 0 0 1 1) 7) 
-                                ; ((0 0 0 0 1 1 0 0 0 1) 3) 
-                                ; ((0 0 0 0 0 1 0 0 0 0) 1))
-                               ; (((1 0 1 0 1 0 1 1 0 1) 6) 
-                                ; ((1 1 1 0 1 0 0 0 1 1) 6) 
-                                ; ((1 0 0 1 1 0 1 1 0 0) 5) 
-                                ; ((1 1 1 1 1 1 1 1 1 1) 10)
-                                ; )))
-
-
-
 ;(exit)
