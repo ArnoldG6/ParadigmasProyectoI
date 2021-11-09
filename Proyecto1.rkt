@@ -301,7 +301,7 @@
           (list (car(car (mas_aptos (ordenar_n_grupos GEN)))) (car (car (cdr (mas_aptos (ordenar_n_grupos GEN))))))
     )
 )
- 
+ ;Genera grupo en basado en el cruce y mutación de dos padres
 (define (generar_grupo_hijo_t padres cant_ind resultado);padres: ((padre1,fitness padre1),(padre2, fitness padre2))
 	(if (equal? 0 cant_ind)
 		resultado
@@ -314,17 +314,23 @@
 (define (generar_grupo_hijo padres cant_ind);padres: ((padre1,fitness padre1),(padre2, fitness padre2))
 	(generar_grupo_hijo_t padres cant_ind '())
 )
-; (define generar_grupo_hijo;Genera grupo en basado en el cruce y mutación de dos padres
-; )
-; (define generar_gen_hija_t ;Genera una nueva generación basado en el cruce y mutación de dos padres
-	; (lambda (padre1 padre2 resultado cant_ind cont)
-		; (if (equal? 0 cont)
-			; (generar_gen_hija_t 
-			; padre1 padre2 (append (list padre1 padre2) ()) cant_ind (+ cont 1))
-		; )
-	; )
-; )
-
+;Genera una generación nueva apartir de la información genética de dos padres.
+(define generar_gen_hija_t ;Genera una nueva generación basado en el cruce y mutación de dos padres
+	(lambda (padres resultado cant_ind cant_grupos)
+		(if (equal? 0 cant_grupos)
+			resultado
+			(if (equal? '() resultado)
+			(generar_gen_hija_t padres (generar_grupo_hijo padres cant_ind) cant_ind (- cant_grupos 1))
+			(generar_gen_hija_t padres (list resultado (generar_grupo_hijo padres cant_ind)) cant_ind (- cant_grupos 1))
+			)
+			
+			
+		)
+	)
+)
+(define (generar_gen_hija padres cant_ind cant_grupos) ;Genera una nueva generación basado en el cruce y mutación de dos padres
+	(generar_gen_hija_t padres '() cant_ind cant_grupos)
+)
 
 
 (define resolver_t
@@ -405,7 +411,8 @@
         )
 	)
 )
-; (resolver 50 4 #t 2 '())
+(resolver 50 4 #t 2 '())
 ; (c '(((1 1 1 1 1 1 1 1 0 0) 8) ((0 0 1 0 1 1 1 1 1 1) 7)) (random 0 11))
-(generar_grupo_hijo '(((1 1 1 1 1 1 1 1 0 0) 8) ((0 0 1 0 1 1 1 1 1 1) 7)) 3)
+; (generar_grupo_hijo  50)
+; (generar_gen_hija '(((1 1 1 1 1 1 1 1 0 0) 8) ((0 0 1 0 1 1 1 1 1 1) 7)) 3 2)
 ;(exit)
