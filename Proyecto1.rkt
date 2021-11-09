@@ -288,36 +288,38 @@
     )
 )
  
-#|
-(define generar_gen_hija_t (lambda
-        (Padre1 Padre2 list_result cant_indiv r)
-        (if (equal? cant_indiv 1)
-            list_result
+; (define (generar_grupo_hijo_t padres cant_ind resultado);padres: ((padre1,fitness padre1),(padre2, fitness padre2))
+	; (if (equal? 0 cant_ind)
+		; resultado
+		; (generar_grupo_hijo_t padres (- cant_ind 1) ())
+	; )
+; )
+; (define generar_grupo_hijo;Genera grupo en basado en el cruce y mutación de dos padres
+; )
+; (define generar_gen_hija_t ;Genera una nueva generación basado en el cruce y mutación de dos padres
+	; (lambda (padre1 padre2 resultado cant_ind cont)
+		; (if (equal? 0 cont)
+			; (generar_gen_hija_t 
+			; padre1 padre2 (append (list padre1 padre2) ()) cant_ind (+ cont 1))
+		; )
+	; )
+; )
 
-            (generar_gen_hija_t Padre1 Padre2 (append list_result (cruce Padre1 Padre2 r) ) (- cant_indiv 1) r)
-            
-       )
-   )
-)|#
-
-
-(define c (lambda (gen_actual n) 
-             (list
-                 (list (mutar (car(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) )
-                       (func_obj (mutar (car(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) ) )
-
-                 (list (mutar (car(cdr(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) )
-                       (func_obj (mutar (car(cdr(cruce (car (car(obtener_mejores_padres_gen gen_actual))) (car (car(cdr(obtener_mejores_padres_gen gen_actual)))) n ) ) ) ) )
-                       )
-             ) 
-        ;)
+(define (c_2 P1)
+	(list 
+		P1
+		(func_obj P1) 
+	)
+)
+(define c ;C toma dos padres, los cruza, los muta y calcula su función fitness
+	(lambda (padres n) 
+		(list
+			(c_2 (mutar (car(cdr(cruce (car (car padres)) (car (car(cdr padres))) n ) ) ) ))
+			(c_2 (mutar (car(cdr(cruce (car (car padres)) (car (car(cdr padres))) n ) ) ) ))
+		) 
     )
 )
 
-(define N_func (lambda (m1)
-		(list m1 (func_obj m1) )	
-	)
-)
 (define resolver_t
     (lambda
         (
@@ -396,5 +398,6 @@
         )
 	)
 )
-(resolver 50 4 #t 2 '())
+; (resolver 50 4 #t 2 '())
+(c '(((1 1 1 1 1 1 1 1 0 0) 8) ((0 0 1 0 1 1 1 1 1 1) 7)) (random 0 11))
 ;(exit)
