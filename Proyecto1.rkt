@@ -393,7 +393,7 @@
                       (((1 0 1 0 1 0 1 1 0 1) 6) 
                        ((1 1 1 0 1 0 0 0 1 1) 6) 
                        ((1 0 0 1 1 0 1 1 0 0) 5) 
-                      ((1 1 1 1 1 1 1 1 1 1) 6))))
+                      ( (1 1 1 1 1 1 0 0 0 0) 6))))
                     
                     cont
                     ;(car(obtener_mejores_padres_gen (ordenar_n_grupos generacion_actual)))
@@ -405,7 +405,7 @@
                                (((1 0 1 0 1 0 1 1 0 1) 6) 
                                 ((1 1 1 0 1 0 0 0 1 1) 6) 
                                 ((1 0 0 1 1 0 1 1 0 0) 5) 
-                                ((1 1 1 1 1 1 1 1 1 1) 6)
+                                ((1 1 1 1 1 1 0 0 0 0) 6)
                                 )))))
                     )
                     (begin
@@ -428,10 +428,10 @@
                                (((1 0 1 0 1 0 1 1 0 1) 6) 
                                 ((1 1 1 0 1 0 0 0 1 1) 6) 
                                 ((1 0 0 1 1 0 1 1 0 0) 5) 
-                                ((1 1 1 1 1 1 1 1 1 1) 6)
+                                ((1 1 1 1 1 1 0 0 0 0) 6)
                                 )))
                              (+ cont 1)
-                             (individuo_mas_apto mas_apto_todo  (car obtener_mejores_padres_gen  (ordenar_n_grupos generacion_actual)))
+                             (individuo_mas_apto mas_apto_todo  (car (obtener_mejores_padres_gen  (ordenar_n_grupos generacion_actual))))
                              )
                            )
                        )
@@ -455,7 +455,7 @@
 ;=========================INSERTAR=========================
 ;aquí va todo lo de inertar xd
 
-(resolver 2 4 #t 2 '())
+(resolver 5000 4 #t 2 '())
 ;(obtener_mejores_padres_gen '((((0 0 1 0 1 1 1 1 1 1) 7) ((1 0 1 1 1 1 0 0 1 1) 7) ((0 0 0 0 1 1 0 0 0 1) 3) ((0 0 0 0 0 1 0 0 0 0) 1)) (((1 0 1 0 1 0 1 1 0 1) 6) ((1 1 1 0 1 0 0 0 1 1) 6) ((1 0 0 1 1 0 1 1 0 0) 5) ((1 1 0 1 1 0 0 0 1 0) 5))) )
 ;(obtener_mejores_padres_gen '(((0 0 1 0 1 1 1 0 1 1) 7) ((1 0 1 1 1 1 0 0 1 1) 6)) )
 ; (ordenar_n_grupos '((
