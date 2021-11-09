@@ -361,7 +361,7 @@
 		(list m1 (func_obj m1) )	
 	)
 )
-
+;Testeando con datos quemados
 (define resolver_t ;Estoy en notación de Perra de las funciones
     (lambda
         (
