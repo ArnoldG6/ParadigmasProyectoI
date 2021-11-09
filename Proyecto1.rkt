@@ -303,7 +303,7 @@
 ;=========================COMPUTAR=========================
 (define obtener_mejores_padres_gen
     (lambda (GEN)
-          (list (car(car (mas_aptos (ordenar_n_grupos GEN)))) (car (cdr (car (mas_aptos (ordenar_n_grupos GEN))))))
+          (list (car(car (mas_aptos (ordenar_n_grupos GEN)))) (car (car (cdr (mas_aptos (ordenar_n_grupos GEN))))))
     )
 )
  
