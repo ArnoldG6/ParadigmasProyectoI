@@ -103,7 +103,7 @@
 )
 (define individuo_mas_apto ;compara por valor de función objetivo y devuelve al individuo más apto.
   (lambda (x y)
-    (if (>= (car(cdr x)) (car(cdr y)))
+    (if (<= (car(cdr x)) (car(cdr y)))
 	   x
 	   y
 	)
@@ -375,7 +375,7 @@
         mas_apto_todo
         )
         (if (equal? can_gen cont)
-            (printf "Individuo más apto: ~s.\n" mas_apto_todo)
+            (printf "Generación ~a Individuo más apto: ~s.\n" cont mas_apto_todo)
             (begin
                 (if (equal? mas_apto_todo '())
                     (resolver_t
@@ -384,7 +384,7 @@
                     elit
                     can_grupos
                     val
-                    '((
+                    (ordenar_n_grupos '((
                        ((0 0 1 0 1 1 1 1 1 1) 7) 
                        ((1 0 1 1 1 1 0 0 1 1) 7) 
                        ((0 0 0 0 1 1 0 0 0 1) 3) 
@@ -393,25 +393,11 @@
                       (((1 0 1 0 1 0 1 1 0 1) 6) 
                        ((1 1 1 0 1 0 0 0 1 1) 6) 
                        ((1 0 0 1 1 0 1 1 0 0) 5) 
-                       ((1 1 1 1 1 1 1 1 1 1) 10)))
+                      ((1 1 1 1 1 1 1 1 1 1) 6))))
                     
                     cont
-                    ;(car(obtener_mejores_padres_gen generacion_actual))
-                    (car(obtener_mejores_padres_gen generacion_actual))
-                    )
-                    (begin
-                      (if (equal? (car(cdr mas_apto_todo)) 10)
-                          mas_apto_todo
-                          (begin
-                            (printf"Generación ~a: ~s.\n" cont  generacion_actual) ;cambiar esto para que hagas sort por grupos                
-                            (printf"Los dos más pichudos de la vida de la generación ~a: ~s.\n" cont (obtener_mejores_padres_gen generacion_actual))
-                            (resolver_t
-                             can_gen
-                             can_ind
-                             elit
-                             can_grupos
-                             val
-                             '((
+                    ;(car(obtener_mejores_padres_gen (ordenar_n_grupos generacion_actual)))
+                    (car(obtener_mejores_padres_gen (ordenar_n_grupos '((
                                 ((0 0 1 0 1 1 1 1 1 1) 7) 
                                 ((1 0 1 1 1 1 0 0 1 1) 7) 
                                 ((0 0 0 0 1 1 0 0 0 1) 3) 
@@ -419,10 +405,33 @@
                                (((1 0 1 0 1 0 1 1 0 1) 6) 
                                 ((1 1 1 0 1 0 0 0 1 1) 6) 
                                 ((1 0 0 1 1 0 1 1 0 0) 5) 
-                                ((1 1 1 1 1 1 1 1 1 1) 10)
-                                ))
+                                ((1 1 1 1 1 1 1 1 1 1) 6)
+                                )))))
+                    )
+                    (begin
+                      (if (equal? (car(cdr mas_apto_todo)) 10)
+                          (printf "Generación ~a Individuo más apto: ~s.\n" cont mas_apto_todo)
+                          (begin
+                            (printf "Generación ~a: ~s.\n" cont generacion_actual)               
+                            (printf "Los dos más pichudos de la vida de la generación: ~s.\n" (obtener_mejores_padres_gen (ordenar_n_grupos generacion_actual)))
+                            (resolver_t
+                             can_gen
+                             can_ind
+                             elit
+                             can_grupos
+                             val
+                             (ordenar_n_grupos '((
+                                ((0 0 1 0 1 1 1 1 1 1) 7) 
+                                ((1 0 1 1 1 1 0 0 1 1) 7) 
+                                ((0 0 0 0 1 1 0 0 0 1) 3) 
+                                ((0 0 0 0 0 1 0 0 0 0) 1))
+                               (((1 0 1 0 1 0 1 1 0 1) 6) 
+                                ((1 1 1 0 1 0 0 0 1 1) 6) 
+                                ((1 0 0 1 1 0 1 1 0 0) 5) 
+                                ((1 1 1 1 1 1 1 1 1 1) 6)
+                                )))
                              (+ cont 1)
-                             (individuo_mas_apto mas_apto_todo  (car(obtener_mejores_padres_gen generacion_actual)))
+                             (individuo_mas_apto mas_apto_todo  (car obtener_mejores_padres_gen  (ordenar_n_grupos generacion_actual)))
                              )
                            )
                        )
@@ -446,8 +455,30 @@
 ;=========================INSERTAR=========================
 ;aquí va todo lo de inertar xd
 
-(resolver 100 4 #t 2 '())
+(resolver 2 4 #t 2 '())
 ;(obtener_mejores_padres_gen '((((0 0 1 0 1 1 1 1 1 1) 7) ((1 0 1 1 1 1 0 0 1 1) 7) ((0 0 0 0 1 1 0 0 0 1) 3) ((0 0 0 0 0 1 0 0 0 0) 1)) (((1 0 1 0 1 0 1 1 0 1) 6) ((1 1 1 0 1 0 0 0 1 1) 6) ((1 0 0 1 1 0 1 1 0 0) 5) ((1 1 0 1 1 0 0 0 1 0) 5))) )
 ;(obtener_mejores_padres_gen '(((0 0 1 0 1 1 1 0 1 1) 7) ((1 0 1 1 1 1 0 0 1 1) 6)) )
+; (ordenar_n_grupos '((
+                                ; ((0 0 1 0 1 1 1 1 1 1) 7) 
+                                ; ((1 0 1 1 1 1 0 0 1 1) 7) 
+                                ; ((0 0 0 0 1 1 0 0 0 1) 3) 
+                                ; ((0 0 0 0 0 1 0 0 0 0) 1))
+                               ; (((1 0 1 0 1 0 1 1 0 1) 6) 
+                                ; ((1 1 1 0 1 0 0 0 1 1) 6) 
+                                ; ((1 0 0 1 1 0 1 1 0 0) 5) 
+                                ; ((1 1 1 1 1 1 1 1 1 1) 10)
+                                ; )))
+; (obtener_mejores_padres_gen                              '((
+                                ; ((0 0 1 0 1 1 1 1 1 1) 7) 
+                                ; ((1 0 1 1 1 1 0 0 1 1) 7) 
+                                ; ((0 0 0 0 1 1 0 0 0 1) 3) 
+                                ; ((0 0 0 0 0 1 0 0 0 0) 1))
+                               ; (((1 0 1 0 1 0 1 1 0 1) 6) 
+                                ; ((1 1 1 0 1 0 0 0 1 1) 6) 
+                                ; ((1 0 0 1 1 0 1 1 0 0) 5) 
+                                ; ((1 1 1 1 1 1 1 1 1 1) 10)
+                                ; )))
+
+
 
 ;(exit)
