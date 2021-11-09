@@ -414,7 +414,7 @@
                           (printf "Generación ~a Individuo más apto: ~s.\n" cont mas_apto_todo)
                           (begin
                             (printf "Generación ~a: ~s.\n" cont generacion_actual)               
-                            (printf "Los dos más aptos de la generación: ~s.\n" (obtener_mejores_padres_gen (ordenar_n_grupos generacion_actual)))
+                            (printf "Los dos más aptos de la generación: ~s.\n" (obtener_mejores_padres_gen generacion_actual))
                             (resolver_t
                              can_gen
                              can_ind
