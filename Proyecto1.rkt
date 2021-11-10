@@ -327,12 +327,7 @@
 	(lambda (padres resultado cant_ind cant_grupos)
 		(if (equal? 0 cant_grupos)
 			resultado
-			(if (equal? '() resultado)
-			(generar_gen_hija_t padres (generar_grupo_hijo padres cant_ind) cant_ind (- cant_grupos 1))
-			(generar_gen_hija_t padres (list resultado (generar_grupo_hijo padres cant_ind)) cant_ind (- cant_grupos 1))
-			)
-			
-			
+			(append (cons (generar_grupo_hijo padres cant_ind) resultado) (generar_gen_hija_t padres resultado cant_ind (- cant_grupos 1)))
 		)
 	)
 )
